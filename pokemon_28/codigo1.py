@@ -1,5 +1,5 @@
 #Ponemos el codigo de manera dinamica y recursiva
-from moves import get_move
+from move import get_move
 import math
 import random
 
