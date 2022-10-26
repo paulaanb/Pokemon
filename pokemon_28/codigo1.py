@@ -1,6 +1,14 @@
-import random
+#Ponemos el codigo de manera dinamica y recursiva
+from moves import get_move
 import math
-#Formulas para la batalla pokemon
+import random
+
+LEVEL = 100  # nivel constante
+IV = 31  # nivel constante
+EV = 250  # nivel constante
+ARCHIVO_POKEMON_DATA = "pokemon_data.csv"
+
+
 def obtener_hp(base):
     resultado_parentesis = (base+IV)*2+((math.sqrt(EV))/4)
     return (resultado_parentesis * LEVEL / 100) + LEVEL+10
@@ -18,10 +26,15 @@ def obtener_damage(power, ataque, defensa):
         (resultado_parentesis_interior * power * (ataque/defensa)) / 50) + 2
     return resultado_parentesis * numero_aleatorio
 
-#Leer la lista pokemon
+
+# Regresa el nombre sin espacios y en minúscula
+def normalizar_nombre(nombre):
+    return nombre.lower().replace(" ", "")
+
+
 def obtener_diccionario_segun_csv():
     pokemones = {}
-    with open(pokemon_data.csv, "r") as archivo:
+    with open(ARCHIVO_POKEMON_DATA, "r") as archivo:
         for linea in archivo:
             columnas = linea.split(",")
             nombre = columnas[0]
@@ -38,8 +51,6 @@ def obtener_diccionario_segun_csv():
             }
     return pokemones
 
-#Calculamos el poder de ataque
-from moves import get_move
 
 def solicitar_movimiento(movimientos):
     while True:
@@ -58,8 +69,8 @@ def solicitar_movimiento(movimientos):
             return poder_ataque
         else:
             print("El ataque tiene un poder de 0. Seleccione otro movimiento")
-            
-#Simulamos una batalla entre pokemons
+
+
 def main():
     pokemones = obtener_diccionario_segun_csv()
     print("Bienvenido al simulador")
@@ -105,3 +116,6 @@ def main():
         f"El daño realizó {nombre_capitalizado} a {nombre_segundo_pokemon_capitalizado} fue de: {damage}")
     nuevo_hp = hp_nivel_100_segundo_pokemon - damage
     print(f"{nombre_segundo_pokemon_capitalizado} quedó con un HP de: {nuevo_hp}")
+
+
+main()
